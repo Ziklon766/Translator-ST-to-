@@ -1,0 +1,1155 @@
+Terminals unused in grammar
+
+   STRING
+   ELSIF
+
+
+Состояние 1 конфликты: 9 сдвига/вывода
+Состояние 5 конфликты: 1 сдвига/вывода
+Состояние 7 конфликты: 9 сдвига/вывода
+Состояние 15 конфликты: 1 вывода/вывода
+Состояние 41 конфликты: 3 сдвига/вывода
+Состояние 42 конфликты: 3 сдвига/вывода
+Состояние 46 конфликты: 9 сдвига/вывода
+Состояние 48 конфликты: 9 сдвига/вывода
+Состояние 51 конфликты: 3 сдвига/вывода
+Состояние 63 конфликты: 9 сдвига/вывода
+Состояние 75 конфликты: 9 сдвига/вывода
+
+
+Грамматика
+
+    0 $accept: start $end
+
+    1 start: PROGRAM operations END_PROGRAM
+
+    2 operations: /* пусто */
+    3           | operation
+    4           | operations operation
+
+    5 operation: assignment
+    6          | expression ';'
+    7          | IF expression THEN operations ELSE operations END_IF ';'
+    8          | IF expression THEN operation END_IF ';'
+    9          | FOR assignment TO expression BY expression DO operations END_FOR ';'
+   10          | REPEAT operations UNTIL expression ';' END_REPEAT ';'
+   11          | WHILE expression DO operations END_WHILE ';'
+   12          | VAR declarations END_VAR
+
+   13 expression: term
+   14           | expression '+' term
+   15           | expression '-' term
+   16           | expression NEQUAL expression
+   17           | assignment
+   18           | ID '=' expression
+
+   19 assignment: ID ASSIGN expression
+
+   20 term: value
+   21     | term '*' value
+   22     | term '/' value
+
+   23 value: NUMBER
+   24      | '-' value
+   25      | '(' expression ')'
+   26      | ID
+
+   27 declarations: /* пусто */
+   28             | declaration
+   29             | declarations declaration
+
+   30 declaration: ID ':' INT ';'
+
+
+Терминальные символы с правилами, в которых они появляются
+
+$end (0) 0
+'(' (40) 25
+')' (41) 25
+'*' (42) 21
+'+' (43) 14
+'-' (45) 15 24
+'/' (47) 22
+':' (58) 30
+';' (59) 6 7 8 9 10 11 30
+'=' (61) 18
+error (256)
+PROGRAM (258) 1
+END_PROGRAM (259) 1
+ID (260) 18 19 26 30
+NUMBER (261) 23
+STRING (262)
+VAR (263) 12
+END_VAR (264) 12
+INT (265) 30
+IF (266) 7 8
+END_IF (267) 7 8
+ELSIF (268)
+ELSE (269) 7
+THEN (270) 7 8
+REPEAT (271) 10
+UNTIL (272) 10
+END_REPEAT (273) 10
+WHILE (274) 11
+END_WHILE (275) 11
+FOR (276) 9
+END_FOR (277) 9
+DO (278) 9 11
+TO (279) 9
+BY (280) 9
+NEQUAL (281) 16
+ASSIGN (282) 19
+
+
+Нетерминальные символы с правилами, в которых они появляются
+
+$accept (37)
+    налево: 0
+start (38)
+    налево: 1, направо: 0
+operations (39)
+    налево: 2 3 4, направо: 1 4 7 9 10 11
+operation (40)
+    налево: 5 6 7 8 9 10 11 12, направо: 3 4 8
+expression (41)
+    налево: 13 14 15 16 17 18, направо: 6 7 8 9 10 11 14 15 16 18 19
+    25
+assignment (42)
+    налево: 19, направо: 5 9 17
+term (43)
+    налево: 20 21 22, направо: 13 14 15 21 22
+value (44)
+    налево: 23 24 25 26, направо: 20 21 22 24
+declarations (45)
+    налево: 27 28 29, направо: 12 29
+declaration (46)
+    налево: 30, направо: 28 29
+
+
+состояние 0
+
+    0 $accept: . start $end
+
+    PROGRAM  сдвиг, и переход в состояние 1
+
+    start  переход в состояние 2
+
+
+состояние 1
+
+    1 start: PROGRAM . operations END_PROGRAM
+
+    ID      сдвиг, и переход в состояние 3
+    NUMBER  сдвиг, и переход в состояние 4
+    VAR     сдвиг, и переход в состояние 5
+    IF      сдвиг, и переход в состояние 6
+    REPEAT  сдвиг, и переход в состояние 7
+    WHILE   сдвиг, и переход в состояние 8
+    FOR     сдвиг, и переход в состояние 9
+    '-'     сдвиг, и переход в состояние 10
+    '('     сдвиг, и переход в состояние 11
+
+    ID        [вывод с использованием правила 2 (operations)]
+    NUMBER    [вывод с использованием правила 2 (operations)]
+    VAR       [вывод с использованием правила 2 (operations)]
+    IF        [вывод с использованием правила 2 (operations)]
+    REPEAT    [вывод с использованием правила 2 (operations)]
+    WHILE     [вывод с использованием правила 2 (operations)]
+    FOR       [вывод с использованием правила 2 (operations)]
+    '-'       [вывод с использованием правила 2 (operations)]
+    '('       [вывод с использованием правила 2 (operations)]
+    $default  вывод с использованием правила 2 (operations)
+
+    operations  переход в состояние 12
+    operation   переход в состояние 13
+    expression  переход в состояние 14
+    assignment  переход в состояние 15
+    term        переход в состояние 16
+    value       переход в состояние 17
+
+
+состояние 2
+
+    0 $accept: start . $end
+
+    $end  сдвиг, и переход в состояние 18
+
+
+состояние 3
+
+   18 expression: ID . '=' expression
+   19 assignment: ID . ASSIGN expression
+   26 value: ID .
+
+    ASSIGN  сдвиг, и переход в состояние 19
+    '='     сдвиг, и переход в состояние 20
+
+    $default  вывод с использованием правила 26 (value)
+
+
+состояние 4
+
+   23 value: NUMBER .
+
+    $default  вывод с использованием правила 23 (value)
+
+
+состояние 5
+
+   12 operation: VAR . declarations END_VAR
+
+    ID  сдвиг, и переход в состояние 21
+
+    ID        [вывод с использованием правила 27 (declarations)]
+    $default  вывод с использованием правила 27 (declarations)
+
+    declarations  переход в состояние 22
+    declaration   переход в состояние 23
+
+
+состояние 6
+
+    7 operation: IF . expression THEN operations ELSE operations END_IF ';'
+    8          | IF . expression THEN operation END_IF ';'
+
+    ID      сдвиг, и переход в состояние 3
+    NUMBER  сдвиг, и переход в состояние 4
+    '-'     сдвиг, и переход в состояние 10
+    '('     сдвиг, и переход в состояние 11
+
+    expression  переход в состояние 24
+    assignment  переход в состояние 25
+    term        переход в состояние 16
+    value       переход в состояние 17
+
+
+состояние 7
+
+   10 operation: REPEAT . operations UNTIL expression ';' END_REPEAT ';'
+
+    ID      сдвиг, и переход в состояние 3
+    NUMBER  сдвиг, и переход в состояние 4
+    VAR     сдвиг, и переход в состояние 5
+    IF      сдвиг, и переход в состояние 6
+    REPEAT  сдвиг, и переход в состояние 7
+    WHILE   сдвиг, и переход в состояние 8
+    FOR     сдвиг, и переход в состояние 9
+    '-'     сдвиг, и переход в состояние 10
+    '('     сдвиг, и переход в состояние 11
+
+    ID        [вывод с использованием правила 2 (operations)]
+    NUMBER    [вывод с использованием правила 2 (operations)]
+    VAR       [вывод с использованием правила 2 (operations)]
+    IF        [вывод с использованием правила 2 (operations)]
+    REPEAT    [вывод с использованием правила 2 (operations)]
+    WHILE     [вывод с использованием правила 2 (operations)]
+    FOR       [вывод с использованием правила 2 (operations)]
+    '-'       [вывод с использованием правила 2 (operations)]
+    '('       [вывод с использованием правила 2 (operations)]
+    $default  вывод с использованием правила 2 (operations)
+
+    operations  переход в состояние 26
+    operation   переход в состояние 13
+    expression  переход в состояние 14
+    assignment  переход в состояние 15
+    term        переход в состояние 16
+    value       переход в состояние 17
+
+
+состояние 8
+
+   11 operation: WHILE . expression DO operations END_WHILE ';'
+
+    ID      сдвиг, и переход в состояние 3
+    NUMBER  сдвиг, и переход в состояние 4
+    '-'     сдвиг, и переход в состояние 10
+    '('     сдвиг, и переход в состояние 11
+
+    expression  переход в состояние 27
+    assignment  переход в состояние 25
+    term        переход в состояние 16
+    value       переход в состояние 17
+
+
+состояние 9
+
+    9 operation: FOR . assignment TO expression BY expression DO operations END_FOR ';'
+
+    ID  сдвиг, и переход в состояние 28
+
+    assignment  переход в состояние 29
+
+
+состояние 10
+
+   24 value: '-' . value
+
+    ID      сдвиг, и переход в состояние 30
+    NUMBER  сдвиг, и переход в состояние 4
+    '-'     сдвиг, и переход в состояние 10
+    '('     сдвиг, и переход в состояние 11
+
+    value  переход в состояние 31
+
+
+состояние 11
+
+   25 value: '(' . expression ')'
+
+    ID      сдвиг, и переход в состояние 3
+    NUMBER  сдвиг, и переход в состояние 4
+    '-'     сдвиг, и переход в состояние 10
+    '('     сдвиг, и переход в состояние 11
+
+    expression  переход в состояние 32
+    assignment  переход в состояние 25
+    term        переход в состояние 16
+    value       переход в состояние 17
+
+
+состояние 12
+
+    1 start: PROGRAM operations . END_PROGRAM
+    4 operations: operations . operation
+
+    END_PROGRAM  сдвиг, и переход в состояние 33
+    ID           сдвиг, и переход в состояние 3
+    NUMBER       сдвиг, и переход в состояние 4
+    VAR          сдвиг, и переход в состояние 5
+    IF           сдвиг, и переход в состояние 6
+    REPEAT       сдвиг, и переход в состояние 7
+    WHILE        сдвиг, и переход в состояние 8
+    FOR          сдвиг, и переход в состояние 9
+    '-'          сдвиг, и переход в состояние 10
+    '('          сдвиг, и переход в состояние 11
+
+    operation   переход в состояние 34
+    expression  переход в состояние 14
+    assignment  переход в состояние 15
+    term        переход в состояние 16
+    value       переход в состояние 17
+
+
+состояние 13
+
+    3 operations: operation .
+
+    $default  вывод с использованием правила 3 (operations)
+
+
+состояние 14
+
+    6 operation: expression . ';'
+   14 expression: expression . '+' term
+   15           | expression . '-' term
+   16           | expression . NEQUAL expression
+
+    NEQUAL  сдвиг, и переход в состояние 35
+    ';'     сдвиг, и переход в состояние 36
+    '+'     сдвиг, и переход в состояние 37
+    '-'     сдвиг, и переход в состояние 38
+
+
+состояние 15
+
+    5 operation: assignment .
+   17 expression: assignment .
+
+    NEQUAL    вывод с использованием правила 17 (expression)
+    ';'       вывод с использованием правила 17 (expression)
+    '+'       вывод с использованием правила 17 (expression)
+    '-'       вывод с использованием правила 5 (operation)
+    '-'       [вывод с использованием правила 17 (expression)]
+    $default  вывод с использованием правила 5 (operation)
+
+
+состояние 16
+
+   13 expression: term .
+   21 term: term . '*' value
+   22     | term . '/' value
+
+    '*'  сдвиг, и переход в состояние 39
+    '/'  сдвиг, и переход в состояние 40
+
+    $default  вывод с использованием правила 13 (expression)
+
+
+состояние 17
+
+   20 term: value .
+
+    $default  вывод с использованием правила 20 (term)
+
+
+состояние 18
+
+    0 $accept: start $end .
+
+    $default  accept
+
+
+состояние 19
+
+   19 assignment: ID ASSIGN . expression
+
+    ID      сдвиг, и переход в состояние 3
+    NUMBER  сдвиг, и переход в состояние 4
+    '-'     сдвиг, и переход в состояние 10
+    '('     сдвиг, и переход в состояние 11
+
+    expression  переход в состояние 41
+    assignment  переход в состояние 25
+    term        переход в состояние 16
+    value       переход в состояние 17
+
+
+состояние 20
+
+   18 expression: ID '=' . expression
+
+    ID      сдвиг, и переход в состояние 3
+    NUMBER  сдвиг, и переход в состояние 4
+    '-'     сдвиг, и переход в состояние 10
+    '('     сдвиг, и переход в состояние 11
+
+    expression  переход в состояние 42
+    assignment  переход в состояние 25
+    term        переход в состояние 16
+    value       переход в состояние 17
+
+
+состояние 21
+
+   30 declaration: ID . ':' INT ';'
+
+    ':'  сдвиг, и переход в состояние 43
+
+
+состояние 22
+
+   12 operation: VAR declarations . END_VAR
+   29 declarations: declarations . declaration
+
+    ID       сдвиг, и переход в состояние 21
+    END_VAR  сдвиг, и переход в состояние 44
+
+    declaration  переход в состояние 45
+
+
+состояние 23
+
+   28 declarations: declaration .
+
+    $default  вывод с использованием правила 28 (declarations)
+
+
+состояние 24
+
+    7 operation: IF expression . THEN operations ELSE operations END_IF ';'
+    8          | IF expression . THEN operation END_IF ';'
+   14 expression: expression . '+' term
+   15           | expression . '-' term
+   16           | expression . NEQUAL expression
+
+    THEN    сдвиг, и переход в состояние 46
+    NEQUAL  сдвиг, и переход в состояние 35
+    '+'     сдвиг, и переход в состояние 37
+    '-'     сдвиг, и переход в состояние 38
+
+
+состояние 25
+
+   17 expression: assignment .
+
+    $default  вывод с использованием правила 17 (expression)
+
+
+состояние 26
+
+    4 operations: operations . operation
+   10 operation: REPEAT operations . UNTIL expression ';' END_REPEAT ';'
+
+    ID      сдвиг, и переход в состояние 3
+    NUMBER  сдвиг, и переход в состояние 4
+    VAR     сдвиг, и переход в состояние 5
+    IF      сдвиг, и переход в состояние 6
+    REPEAT  сдвиг, и переход в состояние 7
+    UNTIL   сдвиг, и переход в состояние 47
+    WHILE   сдвиг, и переход в состояние 8
+    FOR     сдвиг, и переход в состояние 9
+    '-'     сдвиг, и переход в состояние 10
+    '('     сдвиг, и переход в состояние 11
+
+    operation   переход в состояние 34
+    expression  переход в состояние 14
+    assignment  переход в состояние 15
+    term        переход в состояние 16
+    value       переход в состояние 17
+
+
+состояние 27
+
+   11 operation: WHILE expression . DO operations END_WHILE ';'
+   14 expression: expression . '+' term
+   15           | expression . '-' term
+   16           | expression . NEQUAL expression
+
+    DO      сдвиг, и переход в состояние 48
+    NEQUAL  сдвиг, и переход в состояние 35
+    '+'     сдвиг, и переход в состояние 37
+    '-'     сдвиг, и переход в состояние 38
+
+
+состояние 28
+
+   19 assignment: ID . ASSIGN expression
+
+    ASSIGN  сдвиг, и переход в состояние 19
+
+
+состояние 29
+
+    9 operation: FOR assignment . TO expression BY expression DO operations END_FOR ';'
+
+    TO  сдвиг, и переход в состояние 49
+
+
+состояние 30
+
+   26 value: ID .
+
+    $default  вывод с использованием правила 26 (value)
+
+
+состояние 31
+
+   24 value: '-' value .
+
+    $default  вывод с использованием правила 24 (value)
+
+
+состояние 32
+
+   14 expression: expression . '+' term
+   15           | expression . '-' term
+   16           | expression . NEQUAL expression
+   25 value: '(' expression . ')'
+
+    NEQUAL  сдвиг, и переход в состояние 35
+    '+'     сдвиг, и переход в состояние 37
+    '-'     сдвиг, и переход в состояние 38
+    ')'     сдвиг, и переход в состояние 50
+
+
+состояние 33
+
+    1 start: PROGRAM operations END_PROGRAM .
+
+    $default  вывод с использованием правила 1 (start)
+
+
+состояние 34
+
+    4 operations: operations operation .
+
+    $default  вывод с использованием правила 4 (operations)
+
+
+состояние 35
+
+   16 expression: expression NEQUAL . expression
+
+    ID      сдвиг, и переход в состояние 3
+    NUMBER  сдвиг, и переход в состояние 4
+    '-'     сдвиг, и переход в состояние 10
+    '('     сдвиг, и переход в состояние 11
+
+    expression  переход в состояние 51
+    assignment  переход в состояние 25
+    term        переход в состояние 16
+    value       переход в состояние 17
+
+
+состояние 36
+
+    6 operation: expression ';' .
+
+    $default  вывод с использованием правила 6 (operation)
+
+
+состояние 37
+
+   14 expression: expression '+' . term
+
+    ID      сдвиг, и переход в состояние 30
+    NUMBER  сдвиг, и переход в состояние 4
+    '-'     сдвиг, и переход в состояние 10
+    '('     сдвиг, и переход в состояние 11
+
+    term   переход в состояние 52
+    value  переход в состояние 17
+
+
+состояние 38
+
+   15 expression: expression '-' . term
+
+    ID      сдвиг, и переход в состояние 30
+    NUMBER  сдвиг, и переход в состояние 4
+    '-'     сдвиг, и переход в состояние 10
+    '('     сдвиг, и переход в состояние 11
+
+    term   переход в состояние 53
+    value  переход в состояние 17
+
+
+состояние 39
+
+   21 term: term '*' . value
+
+    ID      сдвиг, и переход в состояние 30
+    NUMBER  сдвиг, и переход в состояние 4
+    '-'     сдвиг, и переход в состояние 10
+    '('     сдвиг, и переход в состояние 11
+
+    value  переход в состояние 54
+
+
+состояние 40
+
+   22 term: term '/' . value
+
+    ID      сдвиг, и переход в состояние 30
+    NUMBER  сдвиг, и переход в состояние 4
+    '-'     сдвиг, и переход в состояние 10
+    '('     сдвиг, и переход в состояние 11
+
+    value  переход в состояние 55
+
+
+состояние 41
+
+   14 expression: expression . '+' term
+   15           | expression . '-' term
+   16           | expression . NEQUAL expression
+   19 assignment: ID ASSIGN expression .
+
+    NEQUAL  сдвиг, и переход в состояние 35
+    '+'     сдвиг, и переход в состояние 37
+    '-'     сдвиг, и переход в состояние 38
+
+    NEQUAL    [вывод с использованием правила 19 (assignment)]
+    '+'       [вывод с использованием правила 19 (assignment)]
+    '-'       [вывод с использованием правила 19 (assignment)]
+    $default  вывод с использованием правила 19 (assignment)
+
+
+состояние 42
+
+   14 expression: expression . '+' term
+   15           | expression . '-' term
+   16           | expression . NEQUAL expression
+   18           | ID '=' expression .
+
+    NEQUAL  сдвиг, и переход в состояние 35
+    '+'     сдвиг, и переход в состояние 37
+    '-'     сдвиг, и переход в состояние 38
+
+    NEQUAL    [вывод с использованием правила 18 (expression)]
+    '+'       [вывод с использованием правила 18 (expression)]
+    '-'       [вывод с использованием правила 18 (expression)]
+    $default  вывод с использованием правила 18 (expression)
+
+
+состояние 43
+
+   30 declaration: ID ':' . INT ';'
+
+    INT  сдвиг, и переход в состояние 56
+
+
+состояние 44
+
+   12 operation: VAR declarations END_VAR .
+
+    $default  вывод с использованием правила 12 (operation)
+
+
+состояние 45
+
+   29 declarations: declarations declaration .
+
+    $default  вывод с использованием правила 29 (declarations)
+
+
+состояние 46
+
+    7 operation: IF expression THEN . operations ELSE operations END_IF ';'
+    8          | IF expression THEN . operation END_IF ';'
+
+    ID      сдвиг, и переход в состояние 3
+    NUMBER  сдвиг, и переход в состояние 4
+    VAR     сдвиг, и переход в состояние 5
+    IF      сдвиг, и переход в состояние 6
+    REPEAT  сдвиг, и переход в состояние 7
+    WHILE   сдвиг, и переход в состояние 8
+    FOR     сдвиг, и переход в состояние 9
+    '-'     сдвиг, и переход в состояние 10
+    '('     сдвиг, и переход в состояние 11
+
+    ID        [вывод с использованием правила 2 (operations)]
+    NUMBER    [вывод с использованием правила 2 (operations)]
+    VAR       [вывод с использованием правила 2 (operations)]
+    IF        [вывод с использованием правила 2 (operations)]
+    REPEAT    [вывод с использованием правила 2 (operations)]
+    WHILE     [вывод с использованием правила 2 (operations)]
+    FOR       [вывод с использованием правила 2 (operations)]
+    '-'       [вывод с использованием правила 2 (operations)]
+    '('       [вывод с использованием правила 2 (operations)]
+    $default  вывод с использованием правила 2 (operations)
+
+    operations  переход в состояние 57
+    operation   переход в состояние 58
+    expression  переход в состояние 14
+    assignment  переход в состояние 15
+    term        переход в состояние 16
+    value       переход в состояние 17
+
+
+состояние 47
+
+   10 operation: REPEAT operations UNTIL . expression ';' END_REPEAT ';'
+
+    ID      сдвиг, и переход в состояние 3
+    NUMBER  сдвиг, и переход в состояние 4
+    '-'     сдвиг, и переход в состояние 10
+    '('     сдвиг, и переход в состояние 11
+
+    expression  переход в состояние 59
+    assignment  переход в состояние 25
+    term        переход в состояние 16
+    value       переход в состояние 17
+
+
+состояние 48
+
+   11 operation: WHILE expression DO . operations END_WHILE ';'
+
+    ID      сдвиг, и переход в состояние 3
+    NUMBER  сдвиг, и переход в состояние 4
+    VAR     сдвиг, и переход в состояние 5
+    IF      сдвиг, и переход в состояние 6
+    REPEAT  сдвиг, и переход в состояние 7
+    WHILE   сдвиг, и переход в состояние 8
+    FOR     сдвиг, и переход в состояние 9
+    '-'     сдвиг, и переход в состояние 10
+    '('     сдвиг, и переход в состояние 11
+
+    ID        [вывод с использованием правила 2 (operations)]
+    NUMBER    [вывод с использованием правила 2 (operations)]
+    VAR       [вывод с использованием правила 2 (operations)]
+    IF        [вывод с использованием правила 2 (operations)]
+    REPEAT    [вывод с использованием правила 2 (operations)]
+    WHILE     [вывод с использованием правила 2 (operations)]
+    FOR       [вывод с использованием правила 2 (operations)]
+    '-'       [вывод с использованием правила 2 (operations)]
+    '('       [вывод с использованием правила 2 (operations)]
+    $default  вывод с использованием правила 2 (operations)
+
+    operations  переход в состояние 60
+    operation   переход в состояние 13
+    expression  переход в состояние 14
+    assignment  переход в состояние 15
+    term        переход в состояние 16
+    value       переход в состояние 17
+
+
+состояние 49
+
+    9 operation: FOR assignment TO . expression BY expression DO operations END_FOR ';'
+
+    ID      сдвиг, и переход в состояние 3
+    NUMBER  сдвиг, и переход в состояние 4
+    '-'     сдвиг, и переход в состояние 10
+    '('     сдвиг, и переход в состояние 11
+
+    expression  переход в состояние 61
+    assignment  переход в состояние 25
+    term        переход в состояние 16
+    value       переход в состояние 17
+
+
+состояние 50
+
+   25 value: '(' expression ')' .
+
+    $default  вывод с использованием правила 25 (value)
+
+
+состояние 51
+
+   14 expression: expression . '+' term
+   15           | expression . '-' term
+   16           | expression . NEQUAL expression
+   16           | expression NEQUAL expression .
+
+    NEQUAL  сдвиг, и переход в состояние 35
+    '+'     сдвиг, и переход в состояние 37
+    '-'     сдвиг, и переход в состояние 38
+
+    NEQUAL    [вывод с использованием правила 16 (expression)]
+    '+'       [вывод с использованием правила 16 (expression)]
+    '-'       [вывод с использованием правила 16 (expression)]
+    $default  вывод с использованием правила 16 (expression)
+
+
+состояние 52
+
+   14 expression: expression '+' term .
+   21 term: term . '*' value
+   22     | term . '/' value
+
+    '*'  сдвиг, и переход в состояние 39
+    '/'  сдвиг, и переход в состояние 40
+
+    $default  вывод с использованием правила 14 (expression)
+
+
+состояние 53
+
+   15 expression: expression '-' term .
+   21 term: term . '*' value
+   22     | term . '/' value
+
+    '*'  сдвиг, и переход в состояние 39
+    '/'  сдвиг, и переход в состояние 40
+
+    $default  вывод с использованием правила 15 (expression)
+
+
+состояние 54
+
+   21 term: term '*' value .
+
+    $default  вывод с использованием правила 21 (term)
+
+
+состояние 55
+
+   22 term: term '/' value .
+
+    $default  вывод с использованием правила 22 (term)
+
+
+состояние 56
+
+   30 declaration: ID ':' INT . ';'
+
+    ';'  сдвиг, и переход в состояние 62
+
+
+состояние 57
+
+    4 operations: operations . operation
+    7 operation: IF expression THEN operations . ELSE operations END_IF ';'
+
+    ID      сдвиг, и переход в состояние 3
+    NUMBER  сдвиг, и переход в состояние 4
+    VAR     сдвиг, и переход в состояние 5
+    IF      сдвиг, и переход в состояние 6
+    ELSE    сдвиг, и переход в состояние 63
+    REPEAT  сдвиг, и переход в состояние 7
+    WHILE   сдвиг, и переход в состояние 8
+    FOR     сдвиг, и переход в состояние 9
+    '-'     сдвиг, и переход в состояние 10
+    '('     сдвиг, и переход в состояние 11
+
+    operation   переход в состояние 34
+    expression  переход в состояние 14
+    assignment  переход в состояние 15
+    term        переход в состояние 16
+    value       переход в состояние 17
+
+
+состояние 58
+
+    3 operations: operation .
+    8 operation: IF expression THEN operation . END_IF ';'
+
+    END_IF  сдвиг, и переход в состояние 64
+
+    $default  вывод с использованием правила 3 (operations)
+
+
+состояние 59
+
+   10 operation: REPEAT operations UNTIL expression . ';' END_REPEAT ';'
+   14 expression: expression . '+' term
+   15           | expression . '-' term
+   16           | expression . NEQUAL expression
+
+    NEQUAL  сдвиг, и переход в состояние 35
+    ';'     сдвиг, и переход в состояние 65
+    '+'     сдвиг, и переход в состояние 37
+    '-'     сдвиг, и переход в состояние 38
+
+
+состояние 60
+
+    4 operations: operations . operation
+   11 operation: WHILE expression DO operations . END_WHILE ';'
+
+    ID         сдвиг, и переход в состояние 3
+    NUMBER     сдвиг, и переход в состояние 4
+    VAR        сдвиг, и переход в состояние 5
+    IF         сдвиг, и переход в состояние 6
+    REPEAT     сдвиг, и переход в состояние 7
+    WHILE      сдвиг, и переход в состояние 8
+    END_WHILE  сдвиг, и переход в состояние 66
+    FOR        сдвиг, и переход в состояние 9
+    '-'        сдвиг, и переход в состояние 10
+    '('        сдвиг, и переход в состояние 11
+
+    operation   переход в состояние 34
+    expression  переход в состояние 14
+    assignment  переход в состояние 15
+    term        переход в состояние 16
+    value       переход в состояние 17
+
+
+состояние 61
+
+    9 operation: FOR assignment TO expression . BY expression DO operations END_FOR ';'
+   14 expression: expression . '+' term
+   15           | expression . '-' term
+   16           | expression . NEQUAL expression
+
+    BY      сдвиг, и переход в состояние 67
+    NEQUAL  сдвиг, и переход в состояние 35
+    '+'     сдвиг, и переход в состояние 37
+    '-'     сдвиг, и переход в состояние 38
+
+
+состояние 62
+
+   30 declaration: ID ':' INT ';' .
+
+    $default  вывод с использованием правила 30 (declaration)
+
+
+состояние 63
+
+    7 operation: IF expression THEN operations ELSE . operations END_IF ';'
+
+    ID      сдвиг, и переход в состояние 3
+    NUMBER  сдвиг, и переход в состояние 4
+    VAR     сдвиг, и переход в состояние 5
+    IF      сдвиг, и переход в состояние 6
+    REPEAT  сдвиг, и переход в состояние 7
+    WHILE   сдвиг, и переход в состояние 8
+    FOR     сдвиг, и переход в состояние 9
+    '-'     сдвиг, и переход в состояние 10
+    '('     сдвиг, и переход в состояние 11
+
+    ID        [вывод с использованием правила 2 (operations)]
+    NUMBER    [вывод с использованием правила 2 (operations)]
+    VAR       [вывод с использованием правила 2 (operations)]
+    IF        [вывод с использованием правила 2 (operations)]
+    REPEAT    [вывод с использованием правила 2 (operations)]
+    WHILE     [вывод с использованием правила 2 (operations)]
+    FOR       [вывод с использованием правила 2 (operations)]
+    '-'       [вывод с использованием правила 2 (operations)]
+    '('       [вывод с использованием правила 2 (operations)]
+    $default  вывод с использованием правила 2 (operations)
+
+    operations  переход в состояние 68
+    operation   переход в состояние 13
+    expression  переход в состояние 14
+    assignment  переход в состояние 15
+    term        переход в состояние 16
+    value       переход в состояние 17
+
+
+состояние 64
+
+    8 operation: IF expression THEN operation END_IF . ';'
+
+    ';'  сдвиг, и переход в состояние 69
+
+
+состояние 65
+
+   10 operation: REPEAT operations UNTIL expression ';' . END_REPEAT ';'
+
+    END_REPEAT  сдвиг, и переход в состояние 70
+
+
+состояние 66
+
+   11 operation: WHILE expression DO operations END_WHILE . ';'
+
+    ';'  сдвиг, и переход в состояние 71
+
+
+состояние 67
+
+    9 operation: FOR assignment TO expression BY . expression DO operations END_FOR ';'
+
+    ID      сдвиг, и переход в состояние 3
+    NUMBER  сдвиг, и переход в состояние 4
+    '-'     сдвиг, и переход в состояние 10
+    '('     сдвиг, и переход в состояние 11
+
+    expression  переход в состояние 72
+    assignment  переход в состояние 25
+    term        переход в состояние 16
+    value       переход в состояние 17
+
+
+состояние 68
+
+    4 operations: operations . operation
+    7 operation: IF expression THEN operations ELSE operations . END_IF ';'
+
+    ID      сдвиг, и переход в состояние 3
+    NUMBER  сдвиг, и переход в состояние 4
+    VAR     сдвиг, и переход в состояние 5
+    IF      сдвиг, и переход в состояние 6
+    END_IF  сдвиг, и переход в состояние 73
+    REPEAT  сдвиг, и переход в состояние 7
+    WHILE   сдвиг, и переход в состояние 8
+    FOR     сдвиг, и переход в состояние 9
+    '-'     сдвиг, и переход в состояние 10
+    '('     сдвиг, и переход в состояние 11
+
+    operation   переход в состояние 34
+    expression  переход в состояние 14
+    assignment  переход в состояние 15
+    term        переход в состояние 16
+    value       переход в состояние 17
+
+
+состояние 69
+
+    8 operation: IF expression THEN operation END_IF ';' .
+
+    $default  вывод с использованием правила 8 (operation)
+
+
+состояние 70
+
+   10 operation: REPEAT operations UNTIL expression ';' END_REPEAT . ';'
+
+    ';'  сдвиг, и переход в состояние 74
+
+
+состояние 71
+
+   11 operation: WHILE expression DO operations END_WHILE ';' .
+
+    $default  вывод с использованием правила 11 (operation)
+
+
+состояние 72
+
+    9 operation: FOR assignment TO expression BY expression . DO operations END_FOR ';'
+   14 expression: expression . '+' term
+   15           | expression . '-' term
+   16           | expression . NEQUAL expression
+
+    DO      сдвиг, и переход в состояние 75
+    NEQUAL  сдвиг, и переход в состояние 35
+    '+'     сдвиг, и переход в состояние 37
+    '-'     сдвиг, и переход в состояние 38
+
+
+состояние 73
+
+    7 operation: IF expression THEN operations ELSE operations END_IF . ';'
+
+    ';'  сдвиг, и переход в состояние 76
+
+
+состояние 74
+
+   10 operation: REPEAT operations UNTIL expression ';' END_REPEAT ';' .
+
+    $default  вывод с использованием правила 10 (operation)
+
+
+состояние 75
+
+    9 operation: FOR assignment TO expression BY expression DO . operations END_FOR ';'
+
+    ID      сдвиг, и переход в состояние 3
+    NUMBER  сдвиг, и переход в состояние 4
+    VAR     сдвиг, и переход в состояние 5
+    IF      сдвиг, и переход в состояние 6
+    REPEAT  сдвиг, и переход в состояние 7
+    WHILE   сдвиг, и переход в состояние 8
+    FOR     сдвиг, и переход в состояние 9
+    '-'     сдвиг, и переход в состояние 10
+    '('     сдвиг, и переход в состояние 11
+
+    ID        [вывод с использованием правила 2 (operations)]
+    NUMBER    [вывод с использованием правила 2 (operations)]
+    VAR       [вывод с использованием правила 2 (operations)]
+    IF        [вывод с использованием правила 2 (operations)]
+    REPEAT    [вывод с использованием правила 2 (operations)]
+    WHILE     [вывод с использованием правила 2 (operations)]
+    FOR       [вывод с использованием правила 2 (operations)]
+    '-'       [вывод с использованием правила 2 (operations)]
+    '('       [вывод с использованием правила 2 (operations)]
+    $default  вывод с использованием правила 2 (operations)
+
+    operations  переход в состояние 77
+    operation   переход в состояние 13
+    expression  переход в состояние 14
+    assignment  переход в состояние 15
+    term        переход в состояние 16
+    value       переход в состояние 17
+
+
+состояние 76
+
+    7 operation: IF expression THEN operations ELSE operations END_IF ';' .
+
+    $default  вывод с использованием правила 7 (operation)
+
+
+состояние 77
+
+    4 operations: operations . operation
+    9 operation: FOR assignment TO expression BY expression DO operations . END_FOR ';'
+
+    ID       сдвиг, и переход в состояние 3
+    NUMBER   сдвиг, и переход в состояние 4
+    VAR      сдвиг, и переход в состояние 5
+    IF       сдвиг, и переход в состояние 6
+    REPEAT   сдвиг, и переход в состояние 7
+    WHILE    сдвиг, и переход в состояние 8
+    FOR      сдвиг, и переход в состояние 9
+    END_FOR  сдвиг, и переход в состояние 78
+    '-'      сдвиг, и переход в состояние 10
+    '('      сдвиг, и переход в состояние 11
+
+    operation   переход в состояние 34
+    expression  переход в состояние 14
+    assignment  переход в состояние 15
+    term        переход в состояние 16
+    value       переход в состояние 17
+
+
+состояние 78
+
+    9 operation: FOR assignment TO expression BY expression DO operations END_FOR . ';'
+
+    ';'  сдвиг, и переход в состояние 79
+
+
+состояние 79
+
+    9 operation: FOR assignment TO expression BY expression DO operations END_FOR ';' .
+
+    $default  вывод с использованием правила 9 (operation)

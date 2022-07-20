@@ -1,0 +1,20 @@
+PROGRAM
+VAR
+abc : INT;
+var : INT;
+i   : INT;
+END_VAR
+abc := 32;
+WHILE abc <> 0 DO
+abc := abc - 1;
+END_WHILE;
+FOR var:=1 TO abc BY -1 DO
+    i := i - 1
+END_FOR;
+IF var <> 0
+THEN
+var := 43;
+ELSE
+var := 15;
+END_IF;
+END_PROGRAM
